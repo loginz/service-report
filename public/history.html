@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>服务报告历史</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="page-container">
+            <div class="page-header">
+                <h1>服务报告历史</h1>
+                <p>查看和管理所有已提交的服务报告</p>
+            </div>
+            
+            <div class="page-content">
+                <!-- 导航链接 -->
+                <div id="nav-links" class="nav-links"></div>
+                
+                <!-- 搜索和筛选 -->
+                <div class="search-section">
+                    <div class="search-row">
+                        <div class="search-group">
+                            <input type="text" id="search-input" placeholder="搜索客户姓名、工程师姓名或工单号..." class="search-input">
+                        </div>
+                        <div class="filter-group">
+                            <select id="status-filter" class="filter-select">
+                                <option value="">所有状态</option>
+                                <option value="Completed">已完成</option>
+                                <option value="Incomplete">未完成</option>
+                                <option value="In Progress">进行中</option>
+                            </select>
+                            <select id="date-filter" class="filter-select">
+                                <option value="">所有时间</option>
+                                <option value="today">今天</option>
+                                <option value="week">本周</option>
+                                <option value="month">本月</option>
+                                <option value="quarter">本季度</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="search-actions">
+                        <button id="clear-filters" class="btn btn-outline btn-sm">清除筛选</button>
+                        <button id="export-data" class="btn btn-secondary btn-sm">导出数据</button>
+                    </div>
+                </div>
+                
+                <!-- 统计信息 -->
+                <div class="stats-section">
+                    <div class="stat-card">
+                        <div class="stat-number" id="total-reports">0</div>
+                        <div class="stat-label">总报告数</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="completed-reports">0</div>
+                        <div class="stat-label">已完成</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="pending-reports">0</div>
+                        <div class="stat-label">待处理</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="this-month">0</div>
+                        <div class="stat-label">本月新增</div>
+                    </div>
+                </div>
+                
+                <!-- 报告列表 -->
+                <div class="reports-section">
+                    <div class="section-header">
+                        <h2>报告列表</h2>
+                        <div class="view-controls">
+                            <button id="grid-view" class="btn btn-outline btn-sm active">网格视图</button>
+                            <button id="list-view" class="btn btn-outline btn-sm">列表视图</button>
+                        </div>
+                    </div>
+                    
+                    <div id="reports-list" class="reports-grid"></div>
+                    
+                    <!-- 加载更多按钮 -->
+                    <div class="load-more-section" id="load-more-section" style="display: none;">
+                        <button id="load-more-btn" class="btn btn-outline btn-block">加载更多</button>
+                    </div>
+                </div>
+                
+                <!-- 消息提示 -->
+                <div id="message" class="message" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="/__/firebase/init.js"></script>
+    <script src="history.js"></script>
+</body>
+</html>

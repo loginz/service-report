@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Service Report {{reportId}}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  :root{
+    --line:#6b7280;       /* 深灰边框 */
+    --muted:#4b5563;
+    --accent:#ef4444;     /* Report No 红色 */
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; background:#fff; color:#111827; }
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,
+      "Noto Sans SC","PingFang SC","Microsoft YaHei",Arial,sans-serif;
+    font-size:12px; line-height:1.35;
+  }
+
+  .page{ width:210mm; min-height:297mm; margin:0 auto; padding:12mm 10mm; }
+
+  /* 公司抬头 */
+  .company-head{
+    display:grid; grid-template-columns: 80px 1fr; gap:10px; align-items:center;
+    margin-bottom:4mm;
+  }
+  .logo{
+    height:50px; width:80px; display:flex; align-items:center; justify-content:center;
+  }
+  .logo img{ max-height:50px; max-width:80px; }
+  .company-lines{
+    text-align:left;
+  }
+  .company-name{
+    font-weight:800; font-size:20px; letter-spacing:.3px;
+    border-bottom:2px solid #111; padding-bottom:2px; margin-bottom:4px;
+  }
+  .company-sub{ color:var(--muted); }
+
+  /* 标题 + 报告号 */
+  .title-row{
+    display:grid; grid-template-columns: 1fr auto; align-items:end;
+    margin: 2mm 0 4mm 0;
+  }
+  .title{
+    text-align:center; font-weight:700; font-size:18px;
+  }
+  .report-no{ font-size:12px; }
+  .report-no .num{ color:var(--accent); font-weight:700; letter-spacing:1px; }
+
+  /* 表格 */
+  table.sheet{ width:100%; border-collapse:collapse; table-layout: fixed; }
+  .sheet th,.sheet td{ border:1px solid var(--line); padding:5px 7px; vertical-align:top; }
+  .label{ width:110px; white-space:nowrap; }
+  .subhead{ background:#f8fafc; font-weight:700; }
+  .section-title{ background:#f8fafc; font-weight:700; }
+
+  /* 固定高度，确保整页 A4 不分页 */
+  .bigbox{
+    height:30mm;        /* Service Content 固定高度 */
+    overflow:hidden;
+    white-space: pre-line; 
+    word-break: break-word;
+  }
+  .midbox{
+    height:55mm;        /* Service Performed 固定高度 */
+    overflow:hidden;
+    white-space: pre-line; 
+    word-break: break-word;
+    padding-left: 10px; /* optional: ensure indent space */
+    text-indent: 0; /* reset any default indent */
+  }
+  .midbox pre, .midbox div, .midbox p {
+    margin: 0;
+    padding-left: 1em; /* match first line indent */
+    text-indent: -1em;
+  }
+  .remainbox{
+    height:15mm;        /* Remaining Problem 固定高度 */
+    overflow:hidden;
+    white-space: pre-line; 
+    word-break: break-word;
+  }
+  .ackbox{
+    height:18mm;        /* Customer Acceptance（含签名行）固定高度 */
+    overflow:hidden;
+  }
+
+  /* 客户签名区 */
+  .ack p{ margin:6px 0; color:var(--muted); }
+  .sign-line{
+    height:22mm;
+    display:flex;
+    align-items:flex-end;
+    gap:24px;
+    padding:10px 0 0 0;
+  }
+  .sign-label{ color:var(--muted); }
+  .line{ display:inline-block; min-width:160px; border-bottom:1px solid var(--line); height:0; }
+  .sign-img{
+    max-height:18mm;        /* 留出标签/日期文字的空间 */
+    max-width:100%;
+    display:block;          /* 去除基线空隙 */
+    align-self:flex-end;    /* 单独确保图片贴底 */
+    object-fit:contain;
+  }
+  .sign-label, .line{
+    align-self:flex-end;
+  }
+  /* 打印 */
+  @page{ size:A4; margin:10mm; }
+  @media print{ .page{ padding:0; width:auto; min-height:auto; } }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- 公司抬头 -->
+  <div class="company-head">
+    <div class="logo">
+      {{#if company.logoUrl}}
+        <img src="{{company.logoUrl}}" alt="Logo" />
+      {{/if}}
+    </div>
+    <div class="company-lines">
+      <div class="company-name">
+        {{company.name}}{{#unless company.name}}Hilife Interactive Pte. Ltd.{{/unless}}
+      </div>
+      <div class="company-sub">
+        {{#if company.address1}}{{company.address1}}{{else}}111 Somerset Road, #05-05 111 Somerset, Singapore 238164{{/if}}
+      </div>
+      <div class="company-sub">
+        {{#if company.tel}}Tel: {{company.tel}}{{else}}(65) 62830326{{/if}}
+        &nbsp; Email: {{#if company.email}}{{company.email}}{{else}}cs@hilife.sg{{/if}}
+      </div>
+    </div>
+  </div>
+
+  <!-- 标题 + 报告号 -->
+  <div class="title-row">
+    <div></div>
+    <div class="title">Service Report</div>
+    <div class="report-no">Report No: <span class="num">{{reportId}}</span></div>
+  </div>
+
+  <!-- 表单主体 -->
+  <table class="sheet">
+    <tr>
+      <td class="label">Project</td>
+      <td></td>
+      <td class="label">Date</td>
+      <td>{{serviceDate}}</td>
+    </tr>
+     <tr>
+      <td class="label">Location</td>
+      <td colspan="3">{{clientAddress}}</td>
+    </tr>
+
+    <tr>
+      <td class="label">Our Ref</td>
+      <td>{{orderNumber}}</td>
+
+      <td class="label">Your Ref</td>
+      <td>{{orderNumber}}</td>
+    </tr>
+   
+    <tr>
+      <th class="subhead" colspan="2">Client Contact Information</th>
+      <th class="subhead" colspan="2">Service Personnel</th>
+    </tr>
+    <tr>
+      <td class="label">Name</td>
+      <td>{{clientName}}</td>
+      <td class="label">Name:</td>
+      <td>{{engineerName}}</td>
+    </tr>
+    <tr>
+      <td class="label">Contact No:</td>
+      <td>{{clientPhone}}</td>
+      <td class="label">Contact No:</td>
+      <td>{{engineerPhone}}</td>
+    </tr>
+
+    <tr><th class="section-title" colspan="4">Service Content:</th></tr>
+    <tr>
+      <td colspan="4" class="bigbox">
+        {{taskDescription}}
+      </td>
+    </tr>
+
+    <tr><th class="section-title" colspan="4">Service Performed:</th></tr>
+    <tr>
+      <td colspan="4" class="midbox">
+        {{serviceDetails}}
+      </td>
+    </tr>
+
+    <tr><th class="section-title" colspan="4">Remaining Problem:</th></tr>
+    <tr>
+      <td colspan="4" class="remainbox">
+        {{outstandingIssues}}
+      </td>
+    </tr>
+
+    <tr><th class="section-title" colspan="4">Customer Acceptance</th></tr>
+    <tr>
+      <td colspan="4" class="ack ackbox">
+        <p>We acknowledge that the service personnel have attended to this job and performed the service described above.</p>
+        <div class="sign-line">
+          <div class="sign-label">Signature:</div>
+          {{#if signature}}
+            <img class="sign-img" src="{{signature}}" alt="Signature">
+          {{else}} <span class="line"></span> {{/if}}
+          <div class="sign-label" style="margin-left:232px;">Date:</div>
+          <span style="min-width:90px;">{{signDate}}</span>
+        </div>
+      </td>
+    </tr>
+  </table>
+
+</div>
+</body>
+</html>

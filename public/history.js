@@ -26,7 +26,7 @@ firebase.auth().onAuthStateChanged(async user => {
             userRole = 'admin';
         }
     } catch (error) {
-        console.error('获取用户角色失败:', error);
+        console.error('Failed to get user role:', error);
     }
     
     // 初始化页面
@@ -57,7 +57,7 @@ function setupNavigation() {
     const newReportLink = document.createElement('a');
     newReportLink.href = 'report.html';
     newReportLink.className = 'btn btn-primary';
-    newReportLink.innerHTML = '<span>填写新报告</span>';
+    newReportLink.innerHTML = '<span>Create New Report</span>';
     navLinks.appendChild(newReportLink);
     
     // 管理员功能
@@ -65,14 +65,14 @@ function setupNavigation() {
         const adminLink = document.createElement('a');
         adminLink.href = 'user-management.html';
         adminLink.className = 'btn btn-outline';
-        adminLink.innerHTML = '<span>用户管理</span>';
+        adminLink.innerHTML = '<span>User Management</span>';
         navLinks.appendChild(adminLink);
     }
     
     // 登出按钮
     const logoutBtn = document.createElement('button');
     logoutBtn.className = 'btn btn-outline';
-    logoutBtn.innerHTML = '<span>退出登录</span>';
+    logoutBtn.innerHTML = '<span>Sign Out</span>';
     logoutBtn.onclick = () => firebase.auth().signOut();
     navLinks.appendChild(logoutBtn);
 }
@@ -127,7 +127,7 @@ function debounce(func, wait) {
 // 加载报告数据
 async function loadReports() {
     const reportsList = document.getElementById('reports-list');
-    reportsList.innerHTML = '<div class="loading">加载中...</div>';
+    reportsList.innerHTML = '<div class="loading">Loading...</div>';
     
     try {
         let query;
@@ -147,7 +147,7 @@ async function loadReports() {
         const querySnapshot = await query.get();
         
         if (querySnapshot.empty) {
-            reportsList.innerHTML = '<div class="no-data">暂无报告数据</div>';
+            reportsList.innerHTML = '<div class="no-data">No reports found</div>';
             return;
         }
         
@@ -169,15 +169,15 @@ async function loadReports() {
         }
         
     } catch (error) {
-        console.error("加载报告时出错: ", error);
-        reportsList.innerHTML = `<div class="message error">加载报告失败：${error.message}</div>`;
+        console.error("Failed to load reports: ", error);
+        reportsList.innerHTML = `<div class="message error">Failed to load reports: ${error.message}</div>`;
     }
 }
 
 // 加载更多报告
 async function loadMoreReports() {
     const loadMoreBtn = document.getElementById('load-more-btn');
-    loadMoreBtn.innerHTML = '<span>加载中...</span>';
+    loadMoreBtn.innerHTML = '<span>Loading...</span>';
     loadMoreBtn.disabled = true;
     
     try {
@@ -222,10 +222,10 @@ async function loadMoreReports() {
         }
         
     } catch (error) {
-        console.error("加载更多报告时出错: ", error);
-        showMessage(`加载更多报告失败：${error.message}`, 'error');
+        console.error("Failed to load more reports: ", error);
+        showMessage(`Failed to load more reports: ${error.message}`, 'error');
     } finally {
-        loadMoreBtn.innerHTML = '<span>加载更多</span>';
+        loadMoreBtn.innerHTML = '<span>Load More</span>';
         loadMoreBtn.disabled = false;
     }
 }
@@ -309,7 +309,7 @@ function displayReports(reports) {
     const reportsList = document.getElementById('reports-list');
     
     if (reports.length === 0) {
-        reportsList.innerHTML = '<div class="no-data">没有找到匹配的报告</div>';
+        reportsList.innerHTML = '<div class="no-data">No matching reports found</div>';
         return;
     }
     
@@ -326,27 +326,31 @@ function createReportCard(report) {
     const reportCard = document.createElement('div');
     reportCard.className = 'report-card fade-in';
     reportCard.addEventListener('click', () => {
-        window.location.href = `report-detail.html?id=${report.id}`;
+        // 使用自定义的reportId进行导航
+        window.location.href = `report-detail.html?id=${report.reportId || report.id}`;
     });
     
     const timestamp = report.timestamp ? 
-        new Date(report.timestamp.seconds * 1000).toLocaleString('zh-CN') : 
-        '未知时间';
+        new Date(report.timestamp.seconds * 1000).toLocaleString('en-US') : 
+        'Unknown time';
     
     const statusClass = getStatusClass(report.status);
     const statusText = getStatusText(report.status);
     
+    // 使用自定义的reportId显示
+    const displayId = report.reportId || report.id;
+    
     reportCard.innerHTML = `
         <div class="card-header">
-            <h3>报告 #${report.id.substring(0, 8)}</h3>
+            <h3>Report #${displayId}</h3>
             <span class="status-badge ${statusClass}">${statusText}</span>
         </div>
         <div class="card-content">
-            <p><strong>客户：</strong> ${report.clientName || '未填写'}</p>
-            <p><strong>工程师：</strong> ${report.engineerName || '未填写'}</p>
-            <p><strong>工单号：</strong> ${report.orderNumber || '未填写'}</p>
-            <p><strong>服务日期：</strong> ${report.serviceDate || '未填写'}</p>
-            <p><strong>提交时间：</strong> ${timestamp}</p>
+            <p><strong>Customer:</strong> ${report.clientName || 'Not specified'}</p>
+            <p><strong>Engineer:</strong> ${report.engineerName || 'Not specified'}</p>
+            <p><strong>Ref Info:</strong> ${report.orderNumber || 'Not specified'}</p>
+            <p><strong>Service Date:</strong> ${report.serviceDate || 'Not specified'}</p>
+            <p><strong>Submitted:</strong> ${timestamp}</p>
         </div>
     `;
     
@@ -371,13 +375,13 @@ function getStatusClass(status) {
 function getStatusText(status) {
     switch (status) {
         case 'Completed':
-            return '已完成';
+            return 'Completed';
         case 'Incomplete':
-            return '未完成';
+            return 'Incomplete';
         case 'In Progress':
-            return '进行中';
+            return 'In Progress';
         default:
-            return '未知';
+            return 'Unknown';
     }
 }
 
@@ -416,7 +420,7 @@ async function loadStatistics() {
         updateStats(reports);
         
     } catch (error) {
-        console.error('加载统计信息失败:', error);
+        console.error('Failed to load statistics:', error);
     }
 }
 
@@ -465,29 +469,30 @@ function updateFilteredStats() {
 // 导出数据
 function exportData() {
     if (filteredReports.length === 0) {
-        showMessage('没有数据可导出', 'info');
+        showMessage('No data to export', 'info');
         return;
     }
     
     try {
         const csvContent = generateCSV(filteredReports);
-        downloadCSV(csvContent, `服务报告_${new Date().toISOString().split('T')[0]}.csv`);
-        showMessage('数据导出成功', 'success');
+        downloadCSV(csvContent, `Service_Reports_${new Date().toISOString().split('T')[0]}.csv`);
+        showMessage('Data exported successfully', 'success');
     } catch (error) {
-        console.error('导出数据失败:', error);
-        showMessage('导出数据失败', 'error');
+        console.error('Failed to export data:', error);
+        showMessage('Failed to export data', 'error');
     }
 }
 
 // 生成CSV内容
+// 生成CSV内容
 function generateCSV(reports) {
     const headers = [
-        '报告ID', '客户姓名', '工程师姓名', '工单号', '服务日期', 
-        '状态', '任务描述', '服务详情', '提交时间'
+        'Report ID', 'Customer Name', 'Engineer Name', 'Ref Info', 'Service Date', 
+        'Status', 'Task Description', 'Service Details', 'Submitted Time'
     ];
     
     const rows = reports.map(report => [
-        report.id,
+        report.reportId || report.id,
         report.clientName || '',
         report.engineerName || '',
         report.orderNumber || '',
@@ -495,7 +500,7 @@ function generateCSV(reports) {
         getStatusText(report.status) || '',
         report.taskDescription || '',
         report.serviceDetails || '',
-        report.timestamp ? new Date(report.timestamp.seconds * 1000).toLocaleString('zh-CN') : ''
+        report.timestamp ? new Date(report.timestamp.seconds * 1000).toLocaleString('en-US') : ''
     ]);
     
     return [headers, ...rows]

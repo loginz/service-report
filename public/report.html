@@ -1,134 +1,148 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>填写服务报告</title>
+    <title>Create Service Report</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <div class="page-container">
             <div class="page-header">
-                <h1>服务报告</h1>
-                <p>请填写完整的服务信息，客户签名后将自动保存</p>
+                <h1>Create Service Report</h1>
+                <p>Fill in the service report details and submit</p>
             </div>
             
             <div class="page-content">
                 <form id="report-form">
-                    <!-- 任务信息 -->
+                    <!-- Task Information -->
                     <div class="form-section">
-                        <h2>任务信息</h2>
+                        <h2>Task Information</h2>
                         <div class="form-group">
-                            <label for="task-description" class="required">任务描述</label>
-                            <textarea id="task-description" rows="4" placeholder="请详细描述需要完成的任务..." required></textarea>
+                            <label for="report-id" class="required">Report ID</label>
+                            <input type="text" id="report-id" readonly>
+                            <small class="form-hint">Auto-generated report ID</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="order-number" class="required">Reference Information</label>
+                            <input type="text" id="order-number" placeholder="Reference number(ticket/invoice number)" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="task-description" class="required">Task Description</label>
+                            <textarea id="task-description" rows="4" placeholder="Please describe the task in detail..." required></textarea>
                         </div>
                         <div class="form-group">
-                            <label for="service-date" class="required">服务日期</label>
+                            <label for="service-date" class="required">Service Date</label>
                             <input type="date" id="service-date" required>
                         </div>
                     </div>
 
-                    <!-- 工程师信息 -->
+                    <!-- Engineer Information -->
                     <div class="form-section">
-                        <h2>工程师信息</h2>
+                        <h2>Engineer Information</h2>
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="engineer-name" class="required">姓名</label>
-                                <input type="text" id="engineer-name" placeholder="请输入工程师姓名" required>
+                                <label for="engineer-name" class="required">Name</label>
+                                <input type="text" id="engineer-name" placeholder="Please enter engineer name" required>
                             </div>
                             <div class="form-group">
-                                <label for="engineer-phone" class="required">联系电话</label>
-                                <input type="tel" id="engineer-phone" placeholder="请输入联系电话" required>
+                                <label for="engineer-phone" class="required">Phone Number</label>
+                                <input type="tel" id="engineer-phone" placeholder="Please enter engineer phone number" required>
                             </div>
                         </div>
                     </div>
 
-                    <!-- 客户信息 -->
+                    <!-- Customer Information -->
                     <div class="form-section">
-                        <h2>客户信息</h2>
+                        <h2>Customer Information</h2>
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="client-name" class="required">客户姓名</label>
-                                <input type="text" id="client-name" placeholder="请输入客户姓名" required>
+                                <label for="client-name" class="required">Customer Name</label>
+                                <input type="text" id="client-name" placeholder="Please enter customer name" required>
                             </div>
                             <div class="form-group">
-                                <label for="client-phone">联系电话</label>
-                                <input type="tel" id="client-phone" placeholder="请输入客户联系电话">
+                                <label for="client-phone">Phone Number</label>
+                                <input type="tel" id="client-phone" placeholder="Please enter customer phone number">
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="client-email">电子邮箱</label>
-                                <input type="email" id="client-email" placeholder="请输入客户邮箱">
+                                <label for="client-email">Email Address</label>
+                                <input type="email" id="client-email" placeholder="Please enter customer email">
                             </div>
                             <div class="form-group">
-                                <label for="client-address">服务地址</label>
-                                <input type="text" id="client-address" placeholder="请输入服务地址">
+                                <label for="client-address">Service Address</label>
+                                <input type="text" id="client-address" placeholder="Please enter service address">
                             </div>
                         </div>
                     </div>
 
-                    <!-- 服务详情 -->
+                    <!-- Service Details -->
                     <div class="form-section">
-                        <h2>服务详情</h2>
+                        <h2>Service Details</h2>
+                        
                         <div class="form-group">
-                            <label for="order-number" class="required">工单号/发票号</label>
-                            <input type="text" id="order-number" placeholder="请输入工单号或发票号" required>
+                            <label for="service-details" class="required">Service Content and Completion Status</label>
+                            <textarea id="service-details" rows="6" placeholder="Please describe service content and completion status in detail..." required></textarea>
                         </div>
                         <div class="form-group">
-                            <label for="service-details" class="required">服务内容和完成情况</label>
-                            <textarea id="service-details" rows="6" placeholder="请详细描述服务内容和完成情况..." required></textarea>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="status" class="required">服务状态</label>
-                                <select id="status" required>
-                                    <option value="">请选择状态</option>
-                                    <option value="Completed">已完成</option>
-                                    <option value="Incomplete">未完成</option>
-                                    <option value="In Progress">进行中</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="outstanding-issues">遗留问题</label>
-                                <textarea id="outstanding-issues" rows="3" placeholder="如有遗留问题请详细说明..."></textarea>
-                            </div>
+                            <label for="outstanding-issues">Outstanding Issues</label>
+                            <textarea id="outstanding-issues" rows="3" placeholder="If there are outstanding issues, please describe in detail..."></textarea>
                         </div>
                     </div>
 
-                    <!-- 客户签名 -->
+                     <!-- Service Status Section -->
+                    <div class="form-section status-section">
+                        <h2>Service Status</h2>
+                        <div class="form-group">
+                            <label for="status" class="required">Current Status</label>
+                            <select id="status" required>
+                                <option value="">Please select status</option>
+                                <option value="In Progress">In Progress</option>
+                                <option value="Incomplete">Incomplete</option>
+                                <option value="Completed">Completed</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Customer Signature -->
                     <div class="form-section signature-section">
-                        <h2>客户确认签名</h2>
+                        <h2>Customer Confirmation Signature</h2>
                         <p class="signature-notice">
-                            我们确认服务人员已到场并完成了上述描述的服务工作。
+                            We confirm that service personnel have arrived on site and completed the service work described above.
                         </p>
+                        <p><span class="signature-hint">Please sign below to confirm</span></p>
                         <div class="signature-pad-container">
                             <canvas id="signature-pad" width="400" height="200"></canvas>
                             <div class="signature-controls">
                                 <button type="button" id="clear-signature" class="btn btn-outline btn-sm">
-                                    <span>清除签名</span>
+                                    <span>Clear Signature</span>
                                 </button>
-                                <span class="signature-hint">请在下方区域签名确认</span>
+                                
                             </div>
                         </div>
                     </div>
 
-                    <!-- 提交按钮 -->
+                   
+
+                    <!-- Submit Button -->
                     <div class="form-actions">
                         <button type="submit" class="btn btn-primary btn-lg btn-block">
-                            <span>提交服务报告</span>
+                            <span>Submit Service Report</span>
                         </button>
                     </div>
 
-                    <!-- 消息提示 -->
+                    <!-- Message Display -->
                     <div id="message" class="message" style="display: none;"></div>
                 </form>
 
-                <!-- 导航和登出 -->
+                <!-- Navigation and Logout -->
                 <div class="nav-links">
-                    <a href="history.html" class="btn btn-outline">查看历史报告</a>
-                    <button onclick="firebase.auth().signOut();" class="btn btn-outline">退出登录</button>
+                    <a href="history.html" class="btn btn-outline">View Report History</a>
+                    <button onclick="firebase.auth().signOut();" class="btn btn-outline">Sign Out</button>
                 </div>
             </div>
         </div>

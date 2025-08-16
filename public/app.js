@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
 firebase.auth().onAuthStateChanged(user => {
     if (user) {
         // 用户已登录，跳转到历史页面
-        console.log('用户已登录:', user.email);
+        console.log('User already logged in:', user.email);
         redirectToHistory();
     }
 });
@@ -69,7 +69,7 @@ async function handleLogin(e) {
     // 表单验证
     const validationErrors = validateForm(email, password);
     if (validationErrors.length > 0) {
-        showError(validationErrors.join('，'));
+        showError(validationErrors.join(', '));
         return;
     }
     
@@ -82,8 +82,8 @@ async function handleLogin(e) {
         const user = userCredential.user;
         
         // 登录成功
-        console.log('登录成功:', user.email);
-        showSuccessMessage('登录成功，正在跳转...');
+        console.log('Login successful:', user.email);
+        showSuccessMessage('Login successful, redirecting...');
         
         // 延迟跳转，让用户看到成功消息
         setTimeout(() => {
@@ -92,7 +92,7 @@ async function handleLogin(e) {
         
     } catch (error) {
         // 登录失败，显示错误信息
-        console.error('登录失败:', error);
+        console.error('Login failed:', error);
         handleLoginError(error);
     } finally {
         // 恢复按钮状态
@@ -105,18 +105,18 @@ function validateForm(email, password) {
     const errors = [];
     
     if (!email) {
-        errors.push('邮箱地址不能为空');
+        errors.push('Email address is required');
         emailInput.classList.add('error');
     } else if (!isValidEmail(email)) {
-        errors.push('请输入有效的邮箱地址');
+        errors.push('Please enter a valid email address');
         emailInput.classList.add('error');
     }
     
     if (!password) {
-        errors.push('密码不能为空');
+        errors.push('Password is required');
         passwordInput.classList.add('error');
     } else if (password.length < 6) {
-        errors.push('密码长度不能少于6位');
+        errors.push('Password must be at least 6 characters');
         passwordInput.classList.add('error');
     }
     
@@ -131,34 +131,34 @@ function isValidEmail(email) {
 
 // 处理登录错误
 function handleLoginError(error) {
-    let errorMessage = '登录失败，请重试';
+    let errorMessage = 'Login failed, please try again';
     
     switch (error.code) {
         case 'auth/user-not-found':
-            errorMessage = '用户不存在，请检查邮箱地址';
+            errorMessage = 'User not found, please check your email address';
             emailInput.classList.add('error');
             break;
         case 'auth/wrong-password':
-            errorMessage = '密码错误，请重试';
+            errorMessage = 'Incorrect password, please try again';
             passwordInput.classList.add('error');
             passwordInput.focus();
             break;
         case 'auth/invalid-email':
-            errorMessage = '邮箱地址格式不正确';
+            errorMessage = 'Invalid email address format';
             emailInput.classList.add('error');
             emailInput.focus();
             break;
         case 'auth/too-many-requests':
-            errorMessage = '登录尝试次数过多，请稍后再试';
+            errorMessage = 'Too many login attempts, please try again later';
             break;
         case 'auth/network-request-failed':
-            errorMessage = '网络连接失败，请检查网络设置';
+            errorMessage = 'Network connection failed, please check your network settings';
             break;
         case 'auth/user-disabled':
-            errorMessage = '账户已被禁用，请联系管理员';
+            errorMessage = 'Account has been disabled, please contact administrator';
             break;
         default:
-            errorMessage = `登录失败：${error.message}`;
+            errorMessage = `Login failed: ${error.message}`;
     }
     
     showError(errorMessage);

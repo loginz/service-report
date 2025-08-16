@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>服务报告历史</title>
+    <title>Service Report History</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <div class="page-container">
             <div class="page-header">
-                <h1>服务报告历史</h1>
-                <p>查看和管理所有已提交的服务报告</p>
+                <h1>Service Report History</h1>
+                <p>View and manage all submitted service reports</p>
             </div>
             
             <div class="page-content">
@@ -22,27 +22,27 @@
                 <div class="search-section">
                     <div class="search-row">
                         <div class="search-group">
-                            <input type="text" id="search-input" placeholder="搜索客户姓名、工程师姓名或工单号..." class="search-input">
+                            <input type="text" id="search-input" placeholder="Search by customer name, engineer name, or order number..." class="search-input">
                         </div>
                         <div class="filter-group">
                             <select id="status-filter" class="filter-select">
-                                <option value="">所有状态</option>
-                                <option value="Completed">已完成</option>
-                                <option value="Incomplete">未完成</option>
-                                <option value="In Progress">进行中</option>
+                                <option value="">All Status</option>
+                                <option value="Completed">Completed</option>
+                                <option value="Incomplete">Incomplete</option>
+                                <option value="In Progress">In Progress</option>
                             </select>
                             <select id="date-filter" class="filter-select">
-                                <option value="">所有时间</option>
-                                <option value="today">今天</option>
-                                <option value="week">本周</option>
-                                <option value="month">本月</option>
-                                <option value="quarter">本季度</option>
+                                <option value="">All Time</option>
+                                <option value="today">Today</option>
+                                <option value="week">This Week</option>
+                                <option value="month">This Month</option>
+                                <option value="quarter">This Quarter</option>
                             </select>
                         </div>
                     </div>
                     <div class="search-actions">
-                        <button id="clear-filters" class="btn btn-outline btn-sm">清除筛选</button>
-                        <button id="export-data" class="btn btn-secondary btn-sm">导出数据</button>
+                        <button id="clear-filters" class="btn btn-outline btn-sm">Clear Filters</button>
+                        <button id="export-data" class="btn btn-secondary btn-sm">Export Data</button>
                     </div>
                 </div>
                 
@@ -50,29 +50,29 @@
                 <div class="stats-section">
                     <div class="stat-card">
                         <div class="stat-number" id="total-reports">0</div>
-                        <div class="stat-label">总报告数</div>
+                        <div class="stat-label">Total Reports</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-number" id="completed-reports">0</div>
-                        <div class="stat-label">已完成</div>
+                        <div class="stat-label">Completed</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-number" id="pending-reports">0</div>
-                        <div class="stat-label">待处理</div>
+                        <div class="stat-label">Pending</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-number" id="this-month">0</div>
-                        <div class="stat-label">本月新增</div>
+                        <div class="stat-label">This Month</div>
                     </div>
                 </div>
                 
                 <!-- 报告列表 -->
                 <div class="reports-section">
                     <div class="section-header">
-                        <h2>报告列表</h2>
+                        <h2>Report List</h2>
                         <div class="view-controls">
-                            <button id="grid-view" class="btn btn-outline btn-sm active">网格视图</button>
-                            <button id="list-view" class="btn btn-outline btn-sm">列表视图</button>
+                            <button id="grid-view" class="btn btn-outline btn-sm active">Grid View</button>
+                            <button id="list-view" class="btn btn-outline btn-sm">List View</button>
                         </div>
                     </div>
                     
@@ -80,7 +80,7 @@
                     
                     <!-- 加载更多按钮 -->
                     <div class="load-more-section" id="load-more-section" style="display: none;">
-                        <button id="load-more-btn" class="btn btn-outline btn-block">加载更多</button>
+                        <button id="load-more-btn" class="btn btn-outline btn-block">Load More</button>
                     </div>
                 </div>
                 

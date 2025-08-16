@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>服务报告系统 - 登录</title>
+    <title>Service Report System - Login</title>
     <link rel="stylesheet" href="style.css">
     <style>
         .login-container {
@@ -11,34 +11,37 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-color: #ffffff;
             padding: 20px;
         }
         
         .login-card {
-            background: var(--surface-color);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-lg);
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
             padding: 3rem;
             width: 100%;
-            max-width: 400px;
+            max-width: 420px;
             text-align: center;
+            border: 1px solid #e5e7eb;
         }
         
         .login-header {
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
         }
         
         .login-header h1 {
-            color: var(--primary-color);
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
+            color: #1e40af;
+            font-size: 2.25rem;
+            font-weight: 800;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.025em;
         }
         
         .login-header p {
-            color: var(--text-secondary);
-            font-size: 1rem;
+            color: #6b7280;
+            font-size: 1.125rem;
+            font-weight: 500;
         }
         
         .login-form {
@@ -46,83 +49,97 @@
         }
         
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.75rem;
         }
         
         .form-group label {
             display: block;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
             font-weight: 600;
-            color: var(--text-primary);
-            font-size: 0.9rem;
+            color: #374151;
+            font-size: 0.875rem;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.05em;
         }
         
         .form-group input {
             width: 100%;
-            padding: 0.75rem 1rem;
-            border: 2px solid var(--border-color);
-            border-radius: var(--radius);
+            padding: 1rem 1.25rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
             font-size: 1rem;
-            transition: var(--transition);
-            background-color: var(--surface-color);
-            color: var(--text-primary);
+            transition: all 0.2s ease;
+            background-color: #ffffff;
+            color: #111827;
+            font-weight: 500;
         }
         
         .form-group input:focus {
             outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgb(37 99 235 / 0.1);
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+            background-color: #f8fafc;
+        }
+        
+        .form-group input::placeholder {
+            color: #9ca3af;
+            font-weight: 400;
         }
         
         .login-btn {
             width: 100%;
-            padding: 1rem;
-            background-color: var(--primary-color);
+            padding: 1.125rem;
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
             color: white;
             border: none;
-            border-radius: var(--radius);
-            font-size: 1.1rem;
-            font-weight: 600;
+            border-radius: 12px;
+            font-size: 1.125rem;
+            font-weight: 700;
             cursor: pointer;
-            transition: var(--transition);
-            margin-top: 1rem;
+            transition: all 0.2s ease;
+            margin-top: 1.5rem;
+            letter-spacing: 0.025em;
         }
         
         .login-btn:hover {
-            background-color: var(--primary-hover);
-            transform: translateY(-1px);
-            box-shadow: var(--shadow-md);
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+        }
+        
+        .login-btn:active {
+            transform: translateY(0);
         }
         
         .login-btn:disabled {
-            background-color: var(--secondary-color);
+            background: #9ca3af;
             cursor: not-allowed;
             transform: none;
             box-shadow: none;
         }
         
         .error-message {
-            background-color: #fee2e2;
-            color: #991b1b;
+            background-color: #fef2f2;
+            color: #dc2626;
             border: 1px solid #fecaca;
-            padding: 0.75rem;
-            border-radius: var(--radius);
-            margin-top: 1rem;
-            font-size: 0.9rem;
+            padding: 1rem;
+            border-radius: 12px;
+            margin-top: 1.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
             display: none;
+            text-align: left;
         }
         
         .loading-spinner {
             display: inline-block;
-            width: 16px;
-            height: 16px;
-            border: 2px solid transparent;
-            border-top-color: currentColor;
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #ffffff;
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin-right: 0.5rem;
+            margin-right: 0.75rem;
         }
         
         @keyframes spin {
@@ -133,28 +150,88 @@
         
         .forgot-password {
             text-align: center;
-            margin-top: 1rem;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #f3f4f6;
         }
         
         .forgot-password a {
-            color: var(--primary-color);
+            color: #3b82f6;
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: color 0.2s ease;
         }
         
         .forgot-password a:hover {
+            color: #1d4ed8;
             text-decoration: underline;
         }
         
+        /* 输入框错误状态 */
+        .form-group.error input {
+            border-color: #ef4444;
+            background-color: #fef2f2;
+        }
+        
+        .form-group.error input:focus {
+            border-color: #ef4444;
+            box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
+        }
+        
+        .form-group.error label {
+            color: #dc2626;
+        }
+        
+        /* 成功消息样式 */
+        .success-message {
+            background-color: #f0fdf4;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+        }
+        
+        /* 响应式设计 */
         @media (max-width: 480px) {
             .login-card {
-                padding: 2rem;
+                padding: 2rem 1.5rem;
                 margin: 10px;
+                max-width: 100%;
             }
             
             .login-header h1 {
-                font-size: 1.75rem;
+                font-size: 2rem;
             }
+            
+            .login-header p {
+                font-size: 1rem;
+            }
+            
+            .form-group input {
+                padding: 0.875rem 1rem;
+            }
+            
+            .login-btn {
+                padding: 1rem;
+                font-size: 1rem;
+            }
+        }
+        
+        /* 添加一些微妙的装饰元素 */
+        .login-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8, #3b82f6);
+            border-radius: 18px;
+            z-index: -1;
+            opacity: 0.1;
+        }
+        
+        .login-card {
+            position: relative;
         }
     </style>
 </head>
@@ -162,26 +239,26 @@
     <div class="login-container">
         <div class="login-card">
             <div class="login-header">
-                <h1>服务报告系统</h1>
-                <p>请登录您的账户</p>
+                <h1>Service Report System</h1>
+                <p>Please sign in to your account</p>
             </div>
             
             <form id="login-form" class="login-form">
                 <div class="form-group">
-                    <label for="email">邮箱地址</label>
-                    <input type="email" id="email" placeholder="请输入您的邮箱" required>
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="Enter your email address" required>
                 </div>
                 
                 <div class="form-group">
-                    <label for="password">密码</label>
-                    <input type="password" id="password" placeholder="请输入您的密码" required>
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter your password" required>
                 </div>
                 
                 <button type="submit" id="login-btn" class="login-btn">
-                    <span id="login-text">登录</span>
+                    <span id="login-text">Sign In</span>
                     <span id="login-loading" style="display: none;">
                         <span class="loading-spinner"></span>
-                        登录中...
+                        Signing in...
                     </span>
                 </button>
                 
@@ -189,7 +266,7 @@
             </form>
             
             <div class="forgot-password">
-                <a href="#" onclick="alert('请联系系统管理员重置密码')">忘记密码？</a>
+                <a href="#" onclick="alert('Please contact system administrator to reset password')">Forgot password?</a>
             </div>
         </div>
     </div>

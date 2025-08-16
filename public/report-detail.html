@@ -1,25 +1,185 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>报告详情</title>
+    <title>Service Report Details</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>报告详情</h1>
-        <div id="report-detail">
-            <p>正在加载报告...</p>
-        </div>
-        <div style="margin-top: 20px;">
-            <a href="history.html">返回报告历史</a>
+        <div class="page-container">
+            <div class="page-header">
+                <h1>Service Report Details</h1>
+                <p id="report-status-info">Viewing report details</p>
+            </div>
+            
+            <div class="page-content">
+                <!-- Loading Container -->
+                <div id="loading-container" class="loading-container">
+                    <div class="loading-spinner"></div>
+                    <p>Loading report details...</p>
+                </div>
+
+                <!-- Error Container -->
+                <div id="error-container" class="error-container" style="display: none;">
+                    <div class="error-icon">⚠️</div>
+                    <h2>Error Loading Report</h2>
+                    <p id="error-message">An error occurred while loading the report.</p>
+                    <button onclick="window.location.href='/history.html'" class="btn btn-primary">Back to History</button>
+                </div>
+
+                <!-- Report Content -->
+                <div id="report-content" class="report-content" style="display: none;">
+                    <form id="report-form">
+                        <!-- Task Information -->
+                        <div class="form-section">
+                            <h2>Task Information</h2>
+                            <div class="form-group">
+                                <label for="report-id" class="required">Report ID</label>
+                                <input type="text" id="report-id" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="order-number" class="required">Reference Information</label>
+                                <input type="text" id="order-number" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="task-description" class="required">Task Description</label>
+                                <textarea id="task-description" rows="4" readonly></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="service-date" class="required">Service Date</label>
+                                <input type="date" id="service-date" readonly>
+                            </div>
+                        </div>
+
+                        <!-- Engineer Information -->
+                        <div class="form-section">
+                            <h2>Engineer Information</h2>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="engineer-name" class="required">Name</label>
+                                    <input type="text" id="engineer-name" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label for="engineer-phone" class="required">Phone Number</label>
+                                    <input type="tel" id="engineer-phone" readonly>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Customer Information -->
+                        <div class="form-section">
+                            <h2>Customer Information</h2>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="client-name" class="required">Customer Name</label>
+                                    <input type="text" id="client-name" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label for="client-phone">Phone Number</label>
+                                    <input type="tel" id="client-phone" readonly>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="client-email">Email Address</label>
+                                    <input type="email" id="client-email" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label for="client-address">Service Address</label>
+                                    <input type="text" id="client-address" readonly>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Service Details -->
+                        <div class="form-section">
+                            <h2>Service Details</h2>
+                            
+                            <div class="form-group">
+                                <label for="service-details" class="required">Service Content and Completion Status</label>
+                                <textarea id="service-details" rows="6" readonly></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="outstanding-issues">Outstanding Issues</label>
+                                <textarea id="outstanding-issues" rows="3" readonly></textarea>
+                            </div>
+                        </div>
+
+                         <!-- Service Status Section -->
+                         <div class="form-section status-section">
+                            <h2>Service Status</h2>
+                            <div class="form-group">
+                                <label for="status" class="required">Current Status</label>
+                                <select id="status">
+                                    <option value="In Progress">In Progress</option>
+                                    <option value="Incomplete">Incomplete</option>
+                                    <option value="Completed">Completed</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Customer Signature -->
+                        <div class="form-section signature-section">
+                            <h2>Customer Confirmation Signature</h2>
+                            <p class="signature-notice">
+                                We confirm that service personnel have arrived on site and completed the service work described above.
+                            </p>
+                            <p><span class="signature-hint">Please sign below to confirm</span></p>
+                            <div class="signature-pad-container">
+                                <img id="signature-image" style="display: none; max-width: 100%; border: 1px solid var(--border-color); border-radius: var(--radius);" alt="Customer Signature">
+                                <canvas id="signature-pad" width="400" height="200" style="display: none;"></canvas>
+                                <div id="signature-placeholder" class="signature-box" style="display: flex; align-items: center; justify-content: center; height: 200px; border: 2px dashed var(--border-color); border-radius: var(--radius); color: var(--text-secondary);">
+                                    <div class="signature-hint">Customer Signature</div>
+                                </div>
+                                <div class="signature-controls" style="display: none;">
+                                    <button type="button" id="clear-signature" class="btn btn-outline btn-sm">
+                                        <span>Clear Signature</span>
+                                    </button>
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PDF Status -->
+                        <div class="form-section">
+                            <h2>PDF Status</h2>
+                            <div class="form-group">
+                                <label>PDF File</label>
+                                <div id="pdf-file" class="pdf-status">
+                                    <span style="color: #6b7280; font-style: italic;">Checking PDF status...</span>
+                                </div>
+                            </div>
+                        </div>
+
+                       
+                    </form>
+
+                    <!-- Action Buttons -->
+                    <div class="form-actions">
+                        <button id="submit-btn" class="btn btn-primary btn-lg btn-block" style="display: none;">
+                            <span>Submit Changes</span>
+                        </button>
+                    </div>
+
+                    <!-- Message Display -->
+                    <div id="message" class="message" style="display: none;"></div>
+                </div>
+
+                <!-- Navigation and Logout -->
+                <div class="nav-links">
+                    <a href="history.html" class="btn btn-outline">View Report History</a>
+                    <button onclick="firebase.auth().signOut();" class="btn btn-outline">Sign Out</button>
+                </div>
+            </div>
         </div>
     </div>
     
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
     <script src="/__/firebase/init.js"></script>
     <script src="report-detail.js"></script>
 </body>

@@ -1,69 +1,88 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>用户管理</title>
+    <title>User Management</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        .user-card {
-            border: 1px solid #ddd;
-            padding: 15px;
-            margin-bottom: 15px;
-            border-radius: 8px;
-            background-color: #f9f9f9;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .user-info {
-            flex-grow: 1;
-        }
-        .user-actions button {
-            margin-left: 10px;
-            padding: 8px 12px;
-            cursor: pointer;
-        }
-        #add-user-form {
-            display: none;
-            margin-top: 20px;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-        }
-        #add-user-form h3 {
-            margin-top: 0;
-        }
-    </style>
 </head>
 <body>
     <div class="container">
-        <h1>用户管理</h1>
-        <button id="show-add-user-btn">添加新用户</button>
+        <div class="page-container">
+            <div class="page-header">
+                <h1>User Management</h1>
+                <p>Create and manage application users and roles</p>
+            </div>
 
-        <div id="add-user-form">
-            <h3>Add new User</h3>
-            <input type="text" id="new-user-name" placeholder="Name" required>
-            <input type="tel" id="new-user-phone" placeholder="Phone">
-            <input type="email" id="new-user-email" placeholder="Email" required>
-            <input type="password" id="new-user-password" placeholder="Password" required>
-            <select id="new-user-role">
-                <option value="engineer">工程师 (Engineer)</option>
-                <option value="admin">管理员 (Admin)</option>
-            </select>
-            <button id="add-user-btn">Create</button>
-            <p id="add-user-message"></p>
-        </div>
+            <div class="page-content">
+                <!-- Actions -->
+                <div class="nav-links" style="justify-content: flex-start; gap: 0.75rem;">
+                    <a href="history.html" class="btn btn-outline">Back to History</a>
+                    <button onclick="firebase.auth().signOut();" class="btn btn-outline">Sign Out</button>
+                </div>
 
-       
-        <div id="users-list" style="margin-top: 20px;">
-            <p>Loading User List...</p>
-        </div>
-        <div style="margin-top: 20px;">
-            <a href="history.html">返回报告历史</a>
+                <!-- Add User Toggle -->
+                <div class="form-section" style="margin-top: 1rem;">
+                    <div class="form-actions" style="border-top: 0; padding-top: 0; margin-top: 0;">
+                        <button id="show-add-user-btn" class="btn btn-primary">
+                            <span>Add New User</span>
+                        </button>
+                    </div>
+
+                    <!-- Add User Form -->
+                    <form id="add-user-form" style="display: none; margin-top: 1rem;">
+                        <h2>Add New User</h2>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="new-user-name" class="required">Name</label>
+                                <input type="text" id="new-user-name" placeholder="Enter full name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="new-user-phone">Phone</label>
+                                <input type="tel" id="new-user-phone" placeholder="Enter phone number">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="new-user-email" class="required">Email</label>
+                                <input type="email" id="new-user-email" placeholder="Enter email address" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="new-user-password" class="required">Password</label>
+                                <input type="password" id="new-user-password" placeholder="Enter temporary password" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="new-user-role" class="required">Role</label>
+                            <select id="new-user-role" required>
+                                <option value="engineer">Engineer</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                        </div>
+
+                        <div class="form-actions">
+                            <button id="add-user-btn" type="button" class="btn btn-success">
+                                <span>Create</span>
+                            </button>
+                        </div>
+
+                        <p id="add-user-message" class="form-hint" style="margin-top: 0.75rem;"></p>
+                    </form>
+                </div>
+
+                <!-- Users List -->
+                <div class="form-section">
+                    <h2>User List</h2>
+                    <div id="users-list">
+                        <p>Loading User List...</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    
+
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>

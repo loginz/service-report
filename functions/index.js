@@ -151,7 +151,7 @@ async function generatePDFAndSendEmail(reportData, reportId, documentId) {
         });
 
         // 准备邮件收件人列表
-        const recipients = ['zhao@hilife.sg']; // 总是发送给公司邮箱
+        const recipients = [process.env.BACKUP_EMAIL]; // 总是发送给公司邮箱
         
         // 如果有客户邮箱，也添加到收件人列表
         if (reportData.clientEmail) {

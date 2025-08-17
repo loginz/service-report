@@ -99,6 +99,12 @@ firebase init
 
 ### 4. 配置环境
 在 `public/` 目录下创建 Firebase 配置文件，或使用 Firebase 自动配置。
+在 `functions/`目录下创建 .env 配置文件:
+```
+GMAIL_EMAIL=xxx@gmail.com
+GMAIL_PASSWORD=adfafdafasfdfas
+BACKUP_EMAIL=yyy@gmail.com
+```
 
 ### 5. 部署
 ```bash

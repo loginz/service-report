@@ -43,6 +43,13 @@
     display:grid; grid-template-columns: 1fr auto; align-items:end;
     margin: 2mm 0 4mm 0;
   }
+
+
+  .title-row:first-of-type {
+    margin-top: 20mm;
+  }
+
+
   .title{
     text-align:center; font-weight:700; font-size:24px;
   }
@@ -125,14 +132,13 @@
     </div>
     <div class="company-lines">
       <div class="company-name">
-        {{company.name}}{{#unless company.name}}Hilife Interactive Pte. Ltd.{{/unless}}
+        Hilife Interactive Pte. Ltd.{{/unless}}
       </div>
       <div class="company-sub">
-        {{#if company.address1}}{{company.address1}}{{else}}111 Somerset Road, #05-05 111 Somerset, Singapore 238164{{/if}}
+        111 Somerset Road, #05-05 111 Somerset, Singapore 238164{{/if}}
       </div>
       <div class="company-sub">
-        {{#if company.tel}}Tel: {{company.tel}}{{else}}(65) 62830326{{/if}}
-        &nbsp; Email: {{#if company.email}}{{company.email}}{{else}}cs@hilife.sg{{/if}}
+        {{#if company.tel}}Tel: {{company.tel}}{{else}}(65) 62830326{cs@hilife.sg{{/if}}
       </div>
     </div>
   </div>

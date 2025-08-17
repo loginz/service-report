@@ -128,12 +128,12 @@ async function generatePDFAndSendEmail(reportData, reportId, documentId) {
         });
         await browser.close();
         
-        // 使用自定义reportId作为文件名
-        const file = bucket.file(`service_reports/${reportId}.pdf`);
+        // 使用文档ID作为文件名
+        const file = bucket.file(`service_reports/${documentId}.pdf`);
         await file.save(pdfBuffer, { contentType: 'application/pdf' });
-        logger.info(`PDF file ${reportId}.pdf successfully uploaded to Cloud Storage.`);
+        logger.info(`PDF file ${documentId}.pdf successfully uploaded to Cloud Storage.`);
         
-        const pdfUrl = `https://storage.googleapis.com/${bucketName}/service_reports/${reportId}.pdf`;
+        const pdfUrl = `https://storage.googleapis.com/${bucketName}/service_reports/${documentId}.pdf`;
         // 使用文档ID更新数据库
         await db.collection('reports').doc(documentId).update({ 
             pdfUrl: pdfUrl,
